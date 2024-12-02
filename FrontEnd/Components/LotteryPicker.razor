@@ -1,0 +1,87 @@
+﻿@rendermode InteractiveServer
+
+<MudPaper Class="pa-4">
+   <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined" Vertical="true" OverrideStyles="false">
+      @foreach (var group in GetButtonGroups())
+      {
+         <MudItem xs="12">
+            <MudButtonGroup OverrideStyles="false">
+               @foreach (var button in group)
+               {
+                   <MudButton Variant="@(SelectedButtons.Contains(button) ? Variant.Filled :Variant.Outlined)"
+                             Color="@(SelectedButtons.Contains(button) ? Color.Secondary : Color.Primary)"
+                             OnClick="@(() => ToggleButton(button))"
+                             Class="button-item">
+                     @button
+                  </MudButton>
+               }
+            </MudButtonGroup>
+         </MudItem>
+      }
+   </MudButtonGroup>
+</MudPaper>
+
+@code {
+
+   [Parameter]
+   public int TotalButtons { get; set; } = 42; // Total buttons, e.g., 42 for a 7x7 grid
+
+   [Parameter]
+   public int MaxSelections { get; set; } = 6;
+
+   [Parameter]
+   public int ButtonsPerGroup { get; set; } = 6; // Buttons per group, e.g., 7 for rows of 7 buttons each
+
+   [Parameter]
+   public EventCallback<List<int>> OnSelectionChanged { get; set; } // Callback to notify parent of selected buttons
+
+   [Parameter]
+   public EventCallback<string> OnTooManySelections { get; set; }
+
+   [Parameter]
+   public List<int> SelectedButtons { get; set; } = new();
+
+   private void ToggleButton(int buttonNumber)
+   {
+      if (SelectedButtons.Contains(buttonNumber))
+      {
+         SelectedButtons.Remove(buttonNumber);
+      }
+      else
+      {
+         if (SelectedButtons.Count < MaxSelections)
+         {
+            SelectedButtons.Add(buttonNumber);
+         }
+         else
+         {
+            HandleTooManySelections($"You can only select up to {MaxSelections} buttons.");
+            OnTooManySelections.InvokeAsync($"You can only select up to {MaxSelections} buttons.");
+         }
+      }
+
+      // Invoke callback to notify parent of changes
+      OnSelectionChanged.InvokeAsync(SelectedButtons);
+   }
+
+   private List<List<int>> GetButtonGroups()
+   {
+      // Split buttons into groups based on ButtonsPerGroup
+      var buttonGroups = new List<List<int>>();
+      for (int i = 1; i <= TotalButtons; i += ButtonsPerGroup)
+      {
+         var group = new List<int>();
+         for (int j = i; j < i + ButtonsPerGroup && j <= TotalButtons; j++)
+         {
+            group.Add(j);
+         }
+         buttonGroups.Add(group);
+      }
+      return buttonGroups;
+   }
+
+   private void HandleTooManySelections(string message)
+   {
+      // mToastService.ShowToast(Severity.Info, message);
+   }
+}

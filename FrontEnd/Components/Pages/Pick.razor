@@ -1,0 +1,36 @@
+﻿@page "/pick"
+
+<h3>Pick</h3>
+
+<LotteryPicker TotalButtons="50"
+               MaxSelections="5"
+               ButtonsPerGroup="8"
+               OnSelectionChanged="HandleSelectionChanged"
+               OnTooManySelections="HandleTooManySelections" />
+
+
+<MudText Typo="Typo.h6" Class="mt-3">
+   Your Selected Numbers: @string.Join(", ", SelectedLotteryNumbers)
+</MudText>
+
+
+
+@code {
+   private List<int> SelectedLotteryNumbers = new();
+   private string DrawResult = "";
+   private string Common = "";
+
+   private void HandleSelectionChanged(List<int> selectedNumbers)
+   {
+      SelectedLotteryNumbers = selectedNumbers;
+      // Additional logic can go here, e.g., validating selection, displaying it, etc.
+   }
+
+
+
+   private void HandleTooManySelections(string message)
+   {
+      //Snackbar.Add(message, Severity.Info);
+   }
+
+}

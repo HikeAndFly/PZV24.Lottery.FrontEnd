@@ -1,16 +1,8 @@
 ﻿<MudLayout>
-    <MudAppBar Color="Color.Primary" Elevation="4">
-        <MudContainer>
-            <MudText Typo="Typo.h6" Color="Color.Inherit">FrontEnd</MudText>
-        </MudContainer>
-    </MudAppBar>
+
 
     <MudDrawer Open="true" Variant="DrawerVariant.Responsive" Elevation="4" Color="Color.Default">
         <MudNavMenu>
-            <MudNavLink Href="" Match="NavLinkMatch.All">
-                <MudIcon Icon="bi-house-door-fill" />
-                <MudText>Home</MudText>
-            </MudNavLink>
 
             <MudNavLink Href="counter">
                 <MudIcon Icon="bi-plus-square-fill" />
@@ -21,6 +13,22 @@
                 <MudIcon Icon="bi-list-nested" />
                 <MudText>Settings</MudText>
             </MudNavLink>
+
+            <MudNavLink Href="probability">
+                <MudIcon Icon="bi-list-nested" />
+                <MudText>Probability</MudText>
+            </MudNavLink>
+
+            <MudNavLink Href="pick">
+                <MudIcon Icon="bi-list-nested" />
+                <MudText>Pick</MudText>
+            </MudNavLink>
+
+            <MudNavLink Href="draw">
+                <MudIcon Icon="bi-list-nested" />
+                <MudText>Draw</MudText>
+            </MudNavLink>
+
         </MudNavMenu>
     </MudDrawer>
 </MudLayout>
