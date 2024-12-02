@@ -5,8 +5,7 @@
 <LotteryPicker TotalButtons="50"
                MaxSelections="5"
                ButtonsPerGroup="8"
-               OnSelectionChanged="HandleSelectionChanged"
-               OnTooManySelections="HandleTooManySelections" />
+               OnSelectionChanged="HandleSelectionChanged"/>
 
 
 <MudText Typo="Typo.h6" Class="mt-3">
@@ -23,14 +22,5 @@
    private void HandleSelectionChanged(List<int> selectedNumbers)
    {
       SelectedLotteryNumbers = selectedNumbers;
-      // Additional logic can go here, e.g., validating selection, displaying it, etc.
    }
-
-
-
-   private void HandleTooManySelections(string message)
-   {
-      //Snackbar.Add(message, Severity.Info);
-   }
-
 }
