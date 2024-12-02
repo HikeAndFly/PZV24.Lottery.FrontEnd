@@ -1,0 +1,72 @@
+﻿@page "/settings"
+@rendermode InteractiveServer
+
+<h1>Settings</h1>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-4">
+    <!-- Draw Section -->
+    <MudPaper Class="p-4 mb-4" Elevation="2">
+        <MudText Typo="Typo.h5" Class="mb-4">Draw Settings</MudText>
+
+        <MudGrid>
+            <MudItem xs="12" md="6">
+                <MudTextField @bind-Value="FirstNumber" Label="Lottery main pick draw (first number)"
+                              Placeholder="Enter first number" InputType="InputType.Number" Min="1" Required="true" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudTextField @bind-Value="SecondNumber" Label="Out of (second number)"
+                          Placeholder="Enter second number" InputType="InputType.Number" Min="1" Required="true" />
+            </MudItem>
+        </MudGrid>
+        <MudGrid Class="mt-3">
+            <MudItem xs="12" md="6">
+                <MudTextField @bind-Value="FirstLuckyNumber" Label="Lottery star draw (first number)"
+                          Placeholder="Enter first number" InputType="InputType.Number" Min="1" Required="true" />
+            </MudItem>
+            <MudItem xs="12" md="6">
+                <MudTextField @bind-Value="SecondLuckyNumber" Label="Out of (second number)"
+                          Placeholder="Enter second number" InputType="InputType.Number" Min="1" Required="true" />
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+
+    <!-- Win Section -->
+    <MudPaper Class="p-4 mb-4" Elevation="2">
+        <MudText Typo="Typo.h5" Class="mb-4">Win</MudText>
+        <MudTextField @bind-Value="WinInput" Label="Enter Two Digits"
+                      Placeholder="Enter exactly 2 digits" MaxLength="2"
+                      Pattern="^[0-9]{2}$" Required="true" />
+    </MudPaper>
+
+    <!-- Authentication Section -->
+    <MudPaper Class="p-4 mb-4" Elevation="2">
+        <MudText Typo="Typo.h5" Class="mb-4">Authentication</MudText>
+        <MudCheckBox @bind-Value="IsAuthenticated" Label="I confirm authentication" Required="true" />
+    </MudPaper>
+
+    <!-- Submit Button -->
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="SubmitForm">Submit</MudButton>
+</MudContainer>
+
+@code {
+    private int FirstNumber { get; set; }
+    private int SecondNumber { get; set; }
+    private int FirstLuckyNumber { get; set; }
+    private int SecondLuckyNumber { get; set; }
+    private string WinInput { get; set; } = string.Empty;
+    private bool IsAuthenticated { get; set; }
+
+    private void SubmitForm()
+    {
+        if (!IsAuthenticated)
+        {
+            // Handle missing authentication
+            return;
+        }
+
+        // Handle form submission
+        Console.WriteLine($"Main Draw: {FirstNumber} out of {SecondNumber}");
+        Console.WriteLine($"Lucky Draw: {FirstLuckyNumber} out of {SecondLuckyNumber}");
+        Console.WriteLine($"Win Input: {WinInput}");
+    }
+}
