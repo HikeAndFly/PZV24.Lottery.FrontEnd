@@ -1,4 +1,5 @@
 ﻿@rendermode InteractiveServer
+@inject ISnackbar Snackbar
 
 <MudPaper Class="pa-4">
    <MudButtonGroup Color="Color.Primary" Variant="Variant.Outlined" Vertical="true" OverrideStyles="false">
@@ -83,5 +84,6 @@
    private void HandleTooManySelections(string message)
    {
       // mToastService.ShowToast(Severity.Info, message);
+      Snackbar.Add(message, Severity.Info);
    }
 }
