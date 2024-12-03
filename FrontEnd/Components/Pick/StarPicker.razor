@@ -1,0 +1,86 @@
+﻿@rendermode InteractiveServer
+@inject ISnackbar Snackbar
+
+<MudPaper Class="pa-4">
+    <MudButtonGroup OverrideStyles="false">
+        @foreach (var button in GetButtonGroups())
+        {
+            <div class="d-flex flex-column align-items-center mx-2">
+            <MudToggleIconButton Toggled="@(IsActive(button))"
+                                 ToggledChanged="@(() => ToggleButton(button))"
+                                 Color="@Color.Primary"
+                                 ToggledColor="@Color.Secondary"
+                                 Icon="@Icons.Material.Filled.Star"
+                                 ToggledIcon="@Icons.Material.Filled.StarBorder"
+
+                                 Class="button-item">
+                @button
+            </MudToggleIconButton>
+            <span>@button</span>
+            </div>
+        }
+    </MudButtonGroup>
+</MudPaper>
+
+@code {
+
+    [Parameter]
+    public int TotalStars { get; set; } = 6; // Total buttons, e.g., 42 for a 7x7 grid
+
+    [Parameter]
+    public int MaxSelections { get; set; } = 2;
+
+    [Parameter]
+    public List<int> SelectedStars { get; set; } = new();
+
+    [Parameter]
+    public EventCallback<List<int>> OnSelectionChanged { get; set; } // Callback to notify parent of selected buttons
+
+
+    private void ToggleButton(int starNumber)
+    {
+      if (SelectedStars.Contains(starNumber))
+        {
+         SelectedStars.Remove(starNumber);
+        }
+        else
+        {
+            if (SelectedStars.Count < MaxSelections)
+            {
+            SelectedStars.Add(starNumber);
+            }
+            else
+            {
+                HandleTooManySelections($"You can only select up to {MaxSelections} stars.");
+            }
+        }
+
+        // Invoke callback to notify parent of changes
+        OnSelectionChanged.InvokeAsync(SelectedStars);
+    }
+
+    private List<int> GetButtonGroups()
+    {
+        // Split buttons into groups based on ButtonsPerGroup
+
+            var group = new List<int>();
+            for (int j = 1; j <= TotalStars; j++)
+            {
+                group.Add(j);
+            }
+
+        return group;
+    }
+
+    private void HandleTooManySelections(string message)
+    {
+        // mToastService.ShowToast(Severity.Info, message);
+        Snackbar.Add(message, Severity.Info);
+    }
+
+    private bool IsActive(int button)
+    {
+      return SelectedStars.Contains(button);
+    }
+
+}

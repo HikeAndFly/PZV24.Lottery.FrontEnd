@@ -1,4 +1,5 @@
 ﻿@page "/pick"
+@using FrontEnd.Components.Pick
 
 <h3>Pick</h3>
 
@@ -9,18 +10,31 @@
 
 
 <MudText Typo="Typo.h6" Class="mt-3">
-   Your Selected Numbers: @string.Join(", ", SelectedLotteryNumbers)
+    Your Selected Numbers: @string.Join(", ", SelectedLotteryNumbers)
 </MudText>
 
+<StarPicker TotalStars="12"
+            MaxSelections="2"
+            OnSelectionChanged="HandleStarSelectionChanged"/>
+
+<MudText Typo="Typo.h6" Class="mt-3">
+   Your Selected Stars: @string.Join(", ", SelectedStarNumbers)
+</MudText>
 
 
 @code {
    private List<int> SelectedLotteryNumbers = new();
+   private List<int> SelectedStarNumbers = new();
    private string DrawResult = "";
    private string Common = "";
 
    private void HandleSelectionChanged(List<int> selectedNumbers)
    {
       SelectedLotteryNumbers = selectedNumbers;
+   }
+
+   private void HandleStarSelectionChanged(List<int> selectedStarNumbers)
+   {
+      SelectedStarNumbers = selectedStarNumbers;
    }
 }
